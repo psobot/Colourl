@@ -1,0 +1,8 @@
+#!/bin/sh
+cd /var/www/colour.petersobot.com/
+echo "-----" >> restart.log
+killall python >> restart.log
+echo "Script restarted..." >> restart.log
+date >> restart.log
+echo "-----" >> restart.log
+python -u analyze.py top-100k.csv 10000 2>&1 | tee -a project.2.log &
