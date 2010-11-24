@@ -21,5 +21,5 @@ for i in enumerate(seeks):
     ranking = line.split(',')[0]
     site = line.split(',')[1].split('\n')[0]
     print 'Processing ' + site + ' (' + str(ranking) + ')...'
-    subprocess.call(['python', './webkit2png.py', 'http://' + site, '-o', 'out.png', '-F', 'javascript', '-x', '1280', '768', '-r', '-t', '30'])    # add "-F plugins -w 5" for pluginey goodness
+    subprocess.call(['python', './webkit2png.py', 'http://' + site, '-o', 'out.png', '-F', 'javascript', '-x', '1280', '768', '-t', '30'])    # add "-F plugins -w 5" for pluginey goodness
     subprocess.call(['python', './statisticalize.py', 'out.png', str(ranking), site])
