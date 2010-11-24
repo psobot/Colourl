@@ -12,7 +12,11 @@ def rgb_to_hex(rgb):
     return '#%02x%02x%02x' % rgb
 
 print 'Reading image...'
-im = Image.open(filename)
+try:
+	im = Image.open(filename)
+except:
+	print 'Invalid png for '+webname
+	exit()
 
 print 'Statisticalizing... '
 stat = ImageStat.Stat(im)
