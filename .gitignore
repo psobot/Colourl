@@ -1,2 +1,4 @@
-#we want no pngs
+#we want no output data
 *.png
+*.log
+output.csv

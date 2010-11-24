@@ -3,7 +3,6 @@
 import sys
 import random
 import subprocess
-import os
 
 filename = sys.argv[1]
 sample = int(sys.argv[2])
@@ -22,5 +21,5 @@ for i in enumerate(seeks):
     ranking = line.split(',')[0]
     site = line.split(',')[1].split('\n')[0]
     print 'Processing ' + site + ' (' + str(ranking) + ')...'
-    subprocess.call(['python', os.getcwd() + '/webkit2png.py', 'http://' + site, '-o', 'out.png', '-F', 'javascript', '-F', 'plugins', '-w', '5', '-x', '1280', '768'])
-    subprocess.call(['python', os.getcwd() + '/statisticalize.py', 'out.png', str(ranking), site])
+    subprocess.call(['python', './webkit2png.py', 'http://' + site, '-o', 'out.png', '-F', 'javascript', '-x', '1280', '768', '-r'])    # add "-F plugins -w 5" for pluginey goodness
+    subprocess.call(['python', './statisticalize.py', 'out.png', str(ranking), site])
