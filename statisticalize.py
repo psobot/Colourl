@@ -1,40 +1,27 @@
 #!/usr/bin/python
 
-import png
 import sys
-import math
+import Image
+import ImageStat
 
 filename = sys.argv[1]
 ranking = sys.argv[2]
 webname = sys.argv[3]
-r = png.Reader(filename)
-img = r.asRGBA()
-pixels = list(img[2])
-
-aRed = []
-aGreen = []
-aBlue = []
-
-for line in pixels:
-	reds = []
-	greens = []
-	blues = []
-	for pixel in zip(line[::4],  line[1::4],  line[2::4]):
-		reds.append(pixel[0])
-		greens.append(pixel[1])
-		blues.append(pixel[2])
-	aRed.append(sum(reds)/len(reds))
-	aBlue.append(sum(blues)/len(blues))
-	aGreen.append(sum(greens)/len(greens))
-
-averageRed = sum(aRed)/len(aRed)
-averageBlue = sum(aBlue)/len(aBlue)
-averageGreen = sum(aGreen)/len(aGreen)
 
 def rgb_to_hex(rgb):
     return '#%02x%02x%02x' % rgb
 
-#print ranking+","+webname+","+str(averageRed)+","+str(averageBlue)+","+str(averageGreen)+","+rgb_to_hex((averageRed, averageGreen, averageBlue))
+print 'Reading image...'
+im = Image.open(filename)
+
+print 'Statisticalizing... '
+stat = ImageStat.Stat(im)
+mean = stat.mean
+avg = (int(round(mean[0])), int(round(mean[1])), int(round(mean[2])))
+print 'average: ' + str(avg) + ' (' + rgb_to_hex(avg) + ')'
+
 f = open('output.csv', 'a');
-f.write(ranking+","+webname+","+str(averageRed)+","+str(averageBlue)+","+str(averageGreen)+","+rgb_to_hex((averageRed, averageGreen, averageBlue))+"\n")
+f.write(ranking+","+webname+","+str(avg[0])+","+str(avg[1])+","+str(avg[2])+","+rgb_to_hex(avg)+"\n")
 f.close()
+
+print 'Done.'
